@@ -1,0 +1,7 @@
+
+.project
+.settings/org.eclipse.jdt.core.prefs
+bin/graphics/menu/MainMenu.class
+bin/graphics/MyMenu.class
+bin/graphics/MyWindow.class
+bin/MinecraftServerUpdater.class
