@@ -4,32 +4,32 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import graphics.menu.*;
+
 public class MyWindow
 {
-	private final JFrame frame;
+	private final static JFrame frame = new JFrame("Minecraft Server Updater");
 
 	public MyWindow()
 	{
-		frame = new JFrame("Minecraft Server Updater");
-
+		frame.setResizable(true);
 		frame.setAlwaysOnTop(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(800, 600));
 		frame.pack();
 
 		frame.setLocationRelativeTo(null);
-	}
 
-	public void setMenu(final MyMenu menu)
-	{
-		frame.add(menu.getPanel());
-		frame.setVisible(true);
+		mainMenu();
 	}
 
 	/*
-	 * GETTERS & SETTERS
+	 * MENUS
 	 */
 
-	public final JFrame getFrame()
-	{ return frame; }
+	public final static void mainMenu()
+	{ new MainMenu(frame); }
+
+	public final static void AddServerMenu()
+	{ new AddServerMenu(frame); }
 }
