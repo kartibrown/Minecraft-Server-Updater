@@ -6,11 +6,16 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import graphics.MyMenu;
@@ -37,7 +42,7 @@ public class AddServerMenu extends MyMenu
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		gbc.insets = new Insets(5, 40, 5, 5);
+		gbc.insets = new Insets(7, 40, 7, 7);
 
 		wPanel.add(nameLabel, gbc);
 
@@ -46,23 +51,105 @@ public class AddServerMenu extends MyMenu
 		 */
 
 		final JTextField nameField = new JTextField(10);
-		nameField.setForeground(Color.LIGHT_GRAY);
 		nameField.setFont(font);
 		nameField.setCursor(textCursor);
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 
-		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.insets = new Insets(7, 7, 7, 7);
 
 		wPanel.add(nameField, gbc);
 
 		/*
-		 * BUTTONS
+		 * PASSWORD LABEL
 		 */
 
-		final JPanel buttonPanel = new JPanel(new GridBagLayout());
-		buttonPanel.setOpaque(false);
+		final JLabel passwordLabel = new JLabel("ServerPassword:");
+		passwordLabel.setForeground(Color.LIGHT_GRAY);
+		passwordLabel.setFont(font);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		gbc.insets = new Insets(7, 40, 7, 7);
+
+		wPanel.add(passwordLabel, gbc);
+
+		/*
+		 * PASSWORD FIELD
+		 */
+
+		final JPasswordField passwordField = new JPasswordField(10);
+		passwordField.setFont(font);
+		passwordField.setCursor(textCursor);
+
+		gbc.gridx = 1;
+		gbc.gridy = 1;
+
+		gbc.insets = new Insets(7, 7, 7, 7);
+
+		wPanel.add(passwordField, gbc);
+
+		/*
+		 * PAPER CHECKBOX
+		 */
+
+		final JPanel ePanel = new JPanel(new GridBagLayout());
+		ePanel.setOpaque(false);
+
+		final JCheckBox paperBox = new JCheckBox("Paper", true);
+		paperBox.setFont(font);
+		paperBox.setCursor(buttonCursor);
+		paperBox.setOpaque(false);
+		paperBox.setForeground(Color.LIGHT_GRAY);
+
+		gbc = new GridBagConstraints();
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+
+		gbc.insets = new Insets(7, 7, 7, 7);
+
+		ePanel.add(paperBox, gbc);
+
+		/*
+		 * BUKKIT CHECKBOX
+		 */
+
+		final JCheckBox bukkitBox = new JCheckBox("Bukkit");
+		bukkitBox.setFont(font);
+		bukkitBox.setCursor(buttonCursor);
+		bukkitBox.setOpaque(false);
+		bukkitBox.setForeground(Color.LIGHT_GRAY);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+
+		ePanel.add(bukkitBox, gbc);
+
+		/*
+		 * VANILLA CHECKBOX
+		 */
+
+		final JCheckBox vanillaBox = new JCheckBox("Vanilla");
+		vanillaBox.setFont(font);
+		vanillaBox.setCursor(buttonCursor);
+		vanillaBox.setOpaque(false);
+		vanillaBox.setForeground(Color.LIGHT_GRAY);
+
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+
+		gbc.insets = new Insets(7, 7, 7, 20);
+
+		ePanel.add(vanillaBox, gbc);
+
+		/*
+		 * BACK BUTTON
+		 */
+
+		final JPanel sPanel = new JPanel(new GridBagLayout());
+		sPanel.setOpaque(false);
 
 		final JButton backButton = new JButton("Back");
 		backButton.setFont(font);
@@ -72,25 +159,56 @@ public class AddServerMenu extends MyMenu
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		gbc.insets = new Insets(5, 5, 20, 5);
+		gbc.insets = new Insets(7, 7, 7, 7);
 
-		buttonPanel.add(backButton, gbc);
+		sPanel.add(backButton, gbc);
 
 		/*
-		 * ACTION
+		 * CREATE BUTTON
 		 */
 
-		backButton.addActionListener(this);
+		final JButton createButton = new JButton("Create");
+		createButton.setEnabled(false);
+		createButton.setFont(font);
+		createButton.setCursor(buttonCursor);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+
+		sPanel.add(createButton, gbc);
 
 		/*
 		 * MAIN PANEL
 		 */
 
+		panel.add(ePanel, BorderLayout.EAST);
 		panel.add(wPanel, BorderLayout.WEST);
-		panel.add(buttonPanel, BorderLayout.SOUTH);
+		panel.add(sPanel, BorderLayout.SOUTH);
 
 		frame.add(panel);
 		frame.setVisible(true);
+
+		/*
+		 * LISTENERS
+		 */
+
+		backButton.addActionListener(this);
+		createButton.addActionListener(this);
+
+		nameField.addKeyListener(new KeyListener()
+		{
+			@Override
+			public final void keyTyped(final KeyEvent e)
+			{}
+
+			@Override
+			public final void keyPressed(final KeyEvent e)
+			{}
+
+			@Override
+			public final void keyReleased(final KeyEvent e)
+			{ createButton.setEnabled(!nameField.getText().isBlank()); }
+		});
 	}
 
 	@Override
@@ -101,6 +219,12 @@ public class AddServerMenu extends MyMenu
 			clearWindow();
 
 			MyWindow.mainMenu();
+		}
+		else if (e.getActionCommand().equals("Create"))
+		{
+			JOptionPane.showMessageDialog(
+					frame, "Server was not created!\nThis is just a test"
+			);
 		}
 	}
 }
