@@ -26,13 +26,24 @@ import graphics.MyWindow;
 
 public class AddServerMenu extends MyMenu implements KeyListener
 {
-	private JTextField nameField;
-	private JPasswordField passwordField;
-
-	private JCheckBox paperBox, bukkitBox, vanillaBox;
-	private JButton createButton, browseButton;
+	protected final JPanel nPanel, ePanel, wPanel, sPanel;
 
 	private File importFile;
+
+	// NORTH PANEL
+	protected JLabel title;
+
+	// WEST PANEL
+	protected JLabel browseLabel;
+	protected JButton browseButton;
+	protected JTextField nameField;
+	protected JPasswordField passwordField;
+
+	// EAST PANEL
+	protected JCheckBox paperBox, bukkitBox, vanillaBox;
+
+	// SOUTH PANEL
+	protected JButton createButton;
 
 	public AddServerMenu(final JFrame frame)
 	{
@@ -40,10 +51,10 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		importFile = null;
 
-		final JPanel nPanel = this.getNorthPanel();
-		final JPanel ePanel = this.getEastPanel();
-		final JPanel wPanel = this.getWestPanel();
-		final JPanel sPanel = this.getSouthPanel();
+		nPanel = this.getNorthPanel();
+		ePanel = this.getEastPanel();
+		wPanel = this.getWestPanel();
+		sPanel = this.getSouthPanel();
 
 		panel.add(nPanel, BorderLayout.NORTH);
 		panel.add(ePanel, BorderLayout.EAST);
@@ -69,7 +80,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// TITLE
 
-		final JLabel title = new JLabel("Add A Server");
+		title = new JLabel("Add A Server");
 		title.setForeground(Color.LIGHT_GRAY);
 		title.setFont(font);
 
@@ -98,7 +109,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// LABEL FOR BROWSE
 
-		final JLabel browseLabel = new JLabel("Add existing server:");
+		browseLabel = new JLabel("Add existing server:");
 		browseLabel.setFont(font);
 		browseLabel.setForeground(Color.LIGHT_GRAY);
 		browseLabel.setLabelFor(browseButton);
@@ -306,7 +317,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 	}
 
 	@Override
-	public final void actionPerformed(final ActionEvent e)
+	public void actionPerformed(final ActionEvent e)
 	{
 		if (e.getActionCommand().equals("Back"))
 		{
@@ -380,7 +391,9 @@ public class AddServerMenu extends MyMenu implements KeyListener
 	 * 
 	 * @param importedFile
 	 */
-	public final static String getDetailsFromImportedFile(final File importedFile)
+	public final static String getDetailsFromImportedFile(
+			final File importedFile
+	)
 	{
 		final String[] names = importedFile.list();
 
@@ -403,13 +416,12 @@ public class AddServerMenu extends MyMenu implements KeyListener
 			}
 		}
 
-		return paper ? "paper"
-				: bukkit ? "bukkit" : vanilla ? "vanilla" : null;
+		return paper ? "paper" : bukkit ? "bukkit" : vanilla ? "vanilla" : null;
 	}
 
 	@Override
 	public final void keyTyped(final KeyEvent e)
-	{}	
+	{}
 
 	@Override
 	public final void keyPressed(final KeyEvent e)

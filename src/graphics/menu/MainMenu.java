@@ -15,12 +15,12 @@ import javax.swing.JPanel;
 import graphics.MyMenu;
 import graphics.MyWindow;
 
-public class MainMenu extends MyMenu
+public final class MainMenu extends MyMenu
 {
 	public MainMenu(final JFrame frame)
 	{
 		super(frame);
-		
+
 		final JPanel nPanel = this.getNorthPanel();
 		final JPanel cPanel = this.getCenterPanel();
 
@@ -50,7 +50,7 @@ public class MainMenu extends MyMenu
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		gbc.insets = new Insets(20, 5, 5, 5);
+		gbc.insets = new Insets(20, 7, 7, 7);
 		nPanel.add(title, gbc);
 
 		return nPanel;
@@ -76,9 +76,21 @@ public class MainMenu extends MyMenu
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
-		gbc.insets = new Insets(5, 5, 5, 5);
+		gbc.insets = new Insets(7, 7, 7, 7);
 
 		cPanel.add(addServerButton, gbc);
+
+		// CHANGE SERVER BUTTON
+
+		final JButton changeServerButton = new JButton("Change a server");
+		changeServerButton.setFont(font);
+		changeServerButton.setCursor(buttonCursor);
+		changeServerButton.addActionListener(this);
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		cPanel.add(changeServerButton, gbc);
 
 		return cPanel;
 	}
@@ -91,6 +103,12 @@ public class MainMenu extends MyMenu
 			clearWindow();
 
 			MyWindow.AddServerMenu();
+		}
+		else if (e.getActionCommand().equals("Change a server"))
+		{
+			clearWindow();
+			
+			MyWindow.changeServerMenu();
 		}
 	}
 }
