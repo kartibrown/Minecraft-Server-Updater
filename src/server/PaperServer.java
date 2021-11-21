@@ -1,6 +1,6 @@
 package server;
 
-public class PaperServer extends AbstractMinecraftServer
+public final class PaperServer extends AbstractMinecraftServer
 {
 	public PaperServer()
 	{

@@ -1,6 +1,6 @@
 package server;
 
-public class BukkitServer extends AbstractMinecraftServer
+public final class BukkitServer extends AbstractMinecraftServer
 {
 	public BukkitServer()
 	{

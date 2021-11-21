@@ -1,6 +1,6 @@
 package server;
 
-public class VanillaServer extends AbstractMinecraftServer
+public final class VanillaServer extends AbstractMinecraftServer
 {
 	public VanillaServer()
 	{

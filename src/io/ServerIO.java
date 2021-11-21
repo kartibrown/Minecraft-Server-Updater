@@ -1,6 +1,6 @@
 package io;
 
-public class ServerIO
+public final class ServerIO
 {
 	
 }

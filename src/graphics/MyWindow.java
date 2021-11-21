@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import graphics.menu.*;
 
-public class MyWindow
+public final class MyWindow
 {
 	private final static JFrame frame = new JFrame("Minecraft Server Updater");
 
@@ -32,4 +32,9 @@ public class MyWindow
 
 	public final static void AddServerMenu()
 	{ new AddServerMenu(frame); }
+
+	public final static void changeServerMenu()
+	{ 
+		new ChangeServerMenu(frame);
+	 }
 }
