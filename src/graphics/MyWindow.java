@@ -19,7 +19,7 @@ public class MyWindow
 		frame.pack();
 
 		frame.setLocationRelativeTo(null);
-
+		
 		mainMenu();
 	}
 
