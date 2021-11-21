@@ -20,13 +20,27 @@ public class MainMenu extends MyMenu
 	public MainMenu(final JFrame frame)
 	{
 		super(frame);
+		
+		final JPanel nPanel = this.getNorthPanel();
+		final JPanel cPanel = this.getCenterPanel();
 
+		panel.add(nPanel, BorderLayout.NORTH);
+		panel.add(cPanel, BorderLayout.CENTER);
+
+		frame.add(panel);
+		frame.setVisible(true);
+	}
+
+	private final JPanel getNorthPanel()
+	{
 		/*
-		 * TITLE
+		 * NORTH PANEL
 		 */
 
-		final JPanel titlePanel = new JPanel(new GridBagLayout());
-		titlePanel.setOpaque(false);
+		final JPanel nPanel = new JPanel(new GridBagLayout());
+		nPanel.setOpaque(false);
+
+		// TITLE LABEL
 
 		final JLabel title = new JLabel("Minecraft Server Updater");
 		title.setForeground(Color.LIGHT_GRAY);
@@ -37,18 +51,26 @@ public class MainMenu extends MyMenu
 		gbc.gridy = 0;
 
 		gbc.insets = new Insets(20, 5, 5, 5);
-		titlePanel.add(title, gbc);
+		nPanel.add(title, gbc);
 
+		return nPanel;
+	}
+
+	private final JPanel getCenterPanel()
+	{
 		/*
-		 * BUTTONS
+		 * CENTER PANEL
 		 */
 
-		final JPanel buttonPanel = new JPanel(new GridBagLayout());
-		buttonPanel.setOpaque(false);
+		final JPanel cPanel = new JPanel(new GridBagLayout());
+		cPanel.setOpaque(false);
+
+		// ADD SERVER BUTTON
 
 		final JButton addServerButton = new JButton("Add a server");
 		addServerButton.setFont(font);
 		addServerButton.setCursor(buttonCursor);
+		addServerButton.addActionListener(this);
 
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -56,23 +78,9 @@ public class MainMenu extends MyMenu
 
 		gbc.insets = new Insets(5, 5, 5, 5);
 
-		buttonPanel.add(addServerButton, gbc);
+		cPanel.add(addServerButton, gbc);
 
-		/*
-		 * ACTION
-		 */
-
-		addServerButton.addActionListener(this);
-
-		/*
-		 * MAIN PANEL
-		 */
-
-		panel.add(titlePanel, BorderLayout.NORTH);
-		panel.add(buttonPanel, BorderLayout.CENTER);
-
-		frame.add(panel);
-		frame.setVisible(true);
+		return cPanel;
 	}
 
 	@Override
