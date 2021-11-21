@@ -2,15 +2,18 @@ package graphics.menu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -24,12 +27,18 @@ import graphics.MyWindow;
 public class AddServerMenu extends MyMenu implements KeyListener
 {
 	private JTextField nameField;
+	private JPasswordField passwordField;
 
-	private JButton createButton;
+	private JCheckBox paperBox, bukkitBox, vanillaBox;
+	private JButton createButton, browseButton;
+
+	private File importFile;
 
 	public AddServerMenu(final JFrame frame)
 	{
 		super(frame);
+
+		importFile = null;
 
 		final JPanel nPanel = this.getNorthPanel();
 		final JPanel ePanel = this.getEastPanel();
@@ -47,21 +56,6 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		/*
 		 * LISTENERS
 		 */
-	}
-
-	@Override
-	public final void actionPerformed(final ActionEvent e)
-	{
-		if (e.getActionCommand().equals("Back"))
-		{
-			clearWindow();
-
-			MyWindow.mainMenu();
-		}
-		else if (e.getActionCommand().equals("Create"))
-		{
-			JOptionPane.showMessageDialog(frame, "Server was not created!\nThis is just a test");
-		}
 	}
 
 	private final JPanel getNorthPanel()
@@ -102,18 +96,39 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		final JPanel wPanel = new JPanel(new GridBagLayout());
 		wPanel.setOpaque(false);
 
-		// BROWSE BUTTON
+		// LABEL FOR BROWSE
 
-		final JButton browseButton = new JButton("Browse");
-		browseButton.setFont(font);
-		browseButton.setCursor(buttonCursor);
+		final JLabel browseLabel = new JLabel("Add existing server:");
+		browseLabel.setFont(font);
+		browseLabel.setForeground(Color.LIGHT_GRAY);
+		browseLabel.setLabelFor(browseButton);
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		gbc.gridheight = 1;
+
 		gbc.anchor = GridBagConstraints.PAGE_START;
 
-		gbc.insets = new Insets(7, 7, 7, 7);
+		gbc.insets = new Insets(7, 40, 7, 7);
+
+		wPanel.add(browseLabel, gbc);
+
+		// BROWSE BUTTON
+
+		browseButton = new JButton("Browse");
+		browseButton.setFont(font);
+		browseButton.setCursor(buttonCursor);
+		browseButton.addActionListener(this);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridheight = 1;
+
+		gbc.insets = new Insets(7, 7, 40, 7);
 
 		wPanel.add(browseButton, gbc);
 
@@ -122,12 +137,12 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		final JLabel nameLabel = new JLabel("ServerName:");
 		nameLabel.setForeground(Color.LIGHT_GRAY);
 		nameLabel.setFont(font);
-		nameLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		nameLabel.setLabelFor(nameField);
 
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		
+
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.gridheight = 1;
 
@@ -145,7 +160,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		gbc.gridx = 1;
 		gbc.gridy = 3;
-		
+
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.gridheight = 1;
 
@@ -158,10 +173,11 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		final JLabel passwordLabel = new JLabel("ServerPassword:");
 		passwordLabel.setForeground(Color.LIGHT_GRAY);
 		passwordLabel.setFont(font);
+		passwordLabel.setLabelFor(passwordLabel);
 
 		gbc.gridx = 0;
 		gbc.gridy = 4;
-		
+
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.gridheight = 1;
 
@@ -171,13 +187,13 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// PASSWORD FIELD
 
-		final JPasswordField passwordField = new JPasswordField(10);
+		passwordField = new JPasswordField(10);
 		passwordField.setFont(font);
 		passwordField.setCursor(textCursor);
 
 		gbc.gridx = 1;
 		gbc.gridy = 4;
-		
+
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.gridheight = 1;
 
@@ -201,11 +217,12 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// PAPER CHECKBOX
 
-		final JCheckBox paperBox = new JCheckBox("Paper", true);
+		paperBox = new JCheckBox("Paper", true);
 		paperBox.setFont(font);
 		paperBox.setCursor(buttonCursor);
 		paperBox.setOpaque(false);
 		paperBox.setForeground(Color.LIGHT_GRAY);
+		paperBox.addActionListener(this);
 
 		gbc = new GridBagConstraints();
 		gbc.gridx = 0;
@@ -217,11 +234,12 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// BUKKIT CHECKBOX
 
-		final JCheckBox bukkitBox = new JCheckBox("Bukkit");
+		bukkitBox = new JCheckBox("Bukkit");
 		bukkitBox.setFont(font);
 		bukkitBox.setCursor(buttonCursor);
 		bukkitBox.setOpaque(false);
 		bukkitBox.setForeground(Color.LIGHT_GRAY);
+		bukkitBox.addActionListener(this);
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -230,11 +248,12 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// VANILLA CHECKBOX
 
-		final JCheckBox vanillaBox = new JCheckBox("Vanilla");
+		vanillaBox = new JCheckBox("Vanilla");
 		vanillaBox.setFont(font);
 		vanillaBox.setCursor(buttonCursor);
 		vanillaBox.setOpaque(false);
 		vanillaBox.setForeground(Color.LIGHT_GRAY);
+		vanillaBox.addActionListener(this);
 
 		gbc.gridx = 2;
 		gbc.gridy = 0;
@@ -287,8 +306,110 @@ public class AddServerMenu extends MyMenu implements KeyListener
 	}
 
 	@Override
+	public final void actionPerformed(final ActionEvent e)
+	{
+		if (e.getActionCommand().equals("Back"))
+		{
+			clearWindow();
+
+			MyWindow.mainMenu();
+		}
+		else if (e.getActionCommand().equals("Create"))
+		{
+			JOptionPane.showMessageDialog(
+					frame, "Server was not created!\nThis is just a test"
+			);
+		}
+
+		/*
+		 * BROWSE BUTTON
+		 */
+
+		else if (e.getActionCommand().equals("Browse"))
+		{
+			final JFileChooser fc = new JFileChooser();
+			fc.setFont(font);
+			fc.setAcceptAllFileFilterUsed(false);
+			fc.setDialogTitle("Import server");
+			fc.setDialogType(JFileChooser.OPEN_DIALOG);
+			fc.setDragEnabled(false);
+			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			fc.setPreferredSize(new Dimension(600, 500));
+
+			fc.setVisible(true);
+
+			final int result = fc.showOpenDialog(frame);
+
+			if (result == JFileChooser.APPROVE_OPTION)
+			{
+				importFile = fc.getSelectedFile();
+			}
+		}
+
+		/*
+		 * CHECK BOXES
+		 */
+
+		else if (e.getActionCommand().equals("Paper"))
+		{
+			paperBox.setSelected(true);
+			bukkitBox.setSelected(false);
+			vanillaBox.setSelected(false);
+		}
+		else if (e.getActionCommand().equals("Bukkit"))
+		{
+			paperBox.setSelected(false);
+			bukkitBox.setSelected(true);
+			vanillaBox.setSelected(false);
+		}
+		else if (e.getActionCommand().equals("Vanilla"))
+		{
+			paperBox.setSelected(false);
+			bukkitBox.setSelected(false);
+			vanillaBox.setSelected(true);
+		}
+
+		/*
+		 * JFileChooser
+		 */
+
+	}
+
+	/**
+	 * TEST IF THIS WORK, SHOULD RETURN THE SERVER TYPE THAT THE SERVER HAS
+	 * 
+	 * @param importedFile
+	 */
+	public final static String getDetailsFromImportedFile(final File importedFile)
+	{
+		final String[] names = importedFile.list();
+
+		boolean vanilla = false, bukkit = false, paper = false;
+
+		for (final String name : names)
+		{
+			if (name.toLowerCase().contains("vanilla"))
+			{
+				vanilla = true;
+			}
+			else if (name.toLowerCase().contains("bukkit"))
+			{
+				bukkit = true;
+			}
+			else if (name.toLowerCase().contains("paper"))
+			{
+				paper = true;
+				break;
+			}
+		}
+
+		return paper ? "paper"
+				: bukkit ? "bukkit" : vanilla ? "vanilla" : null;
+	}
+
+	@Override
 	public final void keyTyped(final KeyEvent e)
-	{}
+	{}	
 
 	@Override
 	public final void keyPressed(final KeyEvent e)
