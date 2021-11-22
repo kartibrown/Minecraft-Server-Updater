@@ -13,17 +13,25 @@ public final class ChangeServerMenu extends AddServerMenu
 	{
 		super(frame);
 
+		// NORTH PANEL
+
+		super.title.setText("Choose server");
+
+		// WEST PANEL
+
 		super.browseButton.setEnabled(false);
-		super.browseLabel.setEnabled(false);
+
+		super.nameField.setEnabled(false);
+		super.passwordField.setEnabled(false);
+
+		// EAST PANEL
 
 		super.bukkitBox.setEnabled(false);
 		super.paperBox.setEnabled(false);
 		super.vanillaBox.setEnabled(false);
 
-		super.nameField.setEnabled(false);
-		super.passwordField.setEnabled(false);
-
-		super.title.setText("Choose server");
+		super.ramField.setEnabled(false);
+		super.ramSize.setEnabled(false);
 
 		/*
 		 * COMPONENT
