@@ -13,6 +13,7 @@ import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import graphics.MyMenu;
 import graphics.MyWindow;
@@ -34,13 +36,14 @@ public class AddServerMenu extends MyMenu implements KeyListener
 	protected JLabel title;
 
 	// WEST PANEL
-	protected JLabel browseLabel;
 	protected JButton browseButton;
 	protected JTextField nameField;
 	protected JPasswordField passwordField;
 
 	// EAST PANEL
 	protected JCheckBox paperBox, bukkitBox, vanillaBox;
+	protected JTextField ramField;
+	protected JComboBox<String> ramSize;
 
 	// SOUTH PANEL
 	protected JButton createButton;
@@ -63,10 +66,6 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		frame.add(panel);
 		frame.setVisible(true);
-
-		/*
-		 * LISTENERS
-		 */
 	}
 
 	private final JPanel getNorthPanel()
@@ -109,7 +108,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// LABEL FOR BROWSE
 
-		browseLabel = new JLabel("Add existing server:");
+		final JLabel browseLabel = new JLabel("Add existing server:", SwingConstants.LEFT);
 		browseLabel.setFont(font);
 		browseLabel.setForeground(Color.LIGHT_GRAY);
 		browseLabel.setLabelFor(browseButton);
@@ -120,9 +119,9 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.gridheight = 1;
 
-		gbc.anchor = GridBagConstraints.PAGE_START;
+		gbc.anchor = GridBagConstraints.CENTER;
 
-		gbc.insets = new Insets(7, 40, 7, 7);
+		gbc.insets = new Insets(7, 40, 40, 7);
 
 		wPanel.add(browseLabel, gbc);
 
@@ -139,13 +138,14 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.gridheight = 1;
 
+		gbc.anchor = GridBagConstraints.CENTER;
 		gbc.insets = new Insets(7, 7, 40, 7);
 
 		wPanel.add(browseButton, gbc);
 
 		// NAME LABEL
 
-		final JLabel nameLabel = new JLabel("ServerName:");
+		final JLabel nameLabel = new JLabel("ServerName:", SwingConstants.LEFT);
 		nameLabel.setForeground(Color.LIGHT_GRAY);
 		nameLabel.setFont(font);
 		nameLabel.setLabelFor(nameField);
@@ -156,8 +156,6 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.gridheight = 1;
-
-		gbc.anchor = GridBagConstraints.PAGE_END;
 		gbc.insets = new Insets(7, 40, 7, 7);
 
 		wPanel.add(nameLabel, gbc);
@@ -181,7 +179,9 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// PASSWORD LABEL
 
-		final JLabel passwordLabel = new JLabel("ServerPassword:");
+		final JLabel passwordLabel = new JLabel(
+				"ServerPassword:", SwingConstants.LEFT
+		);
 		passwordLabel.setForeground(Color.LIGHT_GRAY);
 		passwordLabel.setFont(font);
 		passwordLabel.setLabelFor(passwordLabel);
@@ -211,8 +211,6 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		gbc.insets = new Insets(7, 7, 7, 7);
 
 		wPanel.add(passwordField, gbc);
-
-		// PAPER CHECKBOX
 
 		return wPanel;
 	}
@@ -272,6 +270,62 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		gbc.insets = new Insets(7, 7, 7, 20);
 
 		ePanel.add(vanillaBox, gbc);
+
+		// RAM LABEL
+
+		final JLabel ramLabel = new JLabel("RAM:");
+		ramLabel.setFont(font);
+		ramLabel.setForeground(Color.LIGHT_GRAY);
+		ramLabel.setLabelFor(ramField);
+
+		gbc = new GridBagConstraints();
+
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+
+		gbc.insets = new Insets(40, 7, 7, 7);
+
+		ePanel.add(ramLabel, gbc);
+
+		// RAM FIELD
+
+		ramField = new JTextField(3);
+		ramField.setFont(font);
+		ramField.setCursor(textCursor);
+
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+
+		gbc.gridwidth = 1;
+		gbc.gridheight = 1;
+
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.insets = new Insets(7, 7, 7, 7);
+
+		ePanel.add(ramField, gbc);
+
+		// RAM MB OR GB
+
+		ramSize = new JComboBox<String>();
+		ramSize.setFont(font.deriveFont(17f));
+		ramSize.setCursor(buttonCursor);
+
+		ramSize.addItem("MB");
+		ramSize.addItem("GB");
+		ramSize.setSelectedIndex(1);
+
+		gbc.gridx = 1;
+		gbc.gridy = 2;
+
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridheight = 1;
+
+		gbc.anchor = GridBagConstraints.WEST;
+
+		ePanel.add(ramSize, gbc);
 
 		return ePanel;
 	}
