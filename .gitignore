@@ -6,3 +6,6 @@ bin/graphics/MyMenu.class
 bin/graphics/MyWindow.class
 bin/MinecraftServerUpdater.class
 /bin/
+/target/
+.classpath
+.settings/org.eclipse.m2e.core.prefs
