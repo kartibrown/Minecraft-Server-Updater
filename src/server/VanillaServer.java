@@ -10,8 +10,4 @@ public final class VanillaServer extends AbstractMinecraftServer
 	@Override
 	public final String getServerType()
 	{ return "bukkit"; }
-
-	@Override
-	public final String getServerDir()
-	{ return dir; }
 }
