@@ -25,6 +25,7 @@ import javax.swing.SwingConstants;
 
 import graphics.MyMenu;
 import graphics.MyWindow;
+import io.ServerIO;
 
 public class AddServerMenu extends MyMenu implements KeyListener
 {
@@ -39,6 +40,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 	protected JButton browseButton;
 	protected JTextField nameField;
 	protected JPasswordField passwordField;
+	protected JTextField dirField;
 
 	// EAST PANEL
 	protected JCheckBox paperBox, bukkitBox, vanillaBox;
@@ -145,7 +147,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// NAME LABEL
 
-		final JLabel nameLabel = new JLabel("ServerName:", SwingConstants.LEFT);
+		final JLabel nameLabel = new JLabel("ServerName:");
 		nameLabel.setForeground(Color.LIGHT_GRAY);
 		nameLabel.setFont(font);
 		nameLabel.setLabelFor(nameField);
@@ -179,9 +181,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		// PASSWORD LABEL
 
-		final JLabel passwordLabel = new JLabel(
-				"ServerPassword:", SwingConstants.LEFT
-		);
+		final JLabel passwordLabel = new JLabel("ServerPassword:");
 		passwordLabel.setForeground(Color.LIGHT_GRAY);
 		passwordLabel.setFont(font);
 		passwordLabel.setLabelFor(passwordLabel);
@@ -205,12 +205,38 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		gbc.gridx = 1;
 		gbc.gridy = 4;
 
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.gridheight = 1;
 
 		gbc.insets = new Insets(7, 7, 7, 7);
 
 		wPanel.add(passwordField, gbc);
+
+		// DIR LABEL
+
+		final JLabel dirLabel = new JLabel("DIR:");
+		dirLabel.setFont(font);
+		dirLabel.setForeground(Color.LIGHT_GRAY);
+		dirLabel.setLabelFor(dirField);
+
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridheight = 1;
+
+		wPanel.add(dirLabel, gbc);
+
+		// DIR FIELD
+
+		dirField = new JTextField(10);
+		dirField.setFont(font);
+		dirField.setCursor(textCursor);
+
+		gbc.gridx = 1;
+		gbc.gridy = 5;
+
+		wPanel.add(dirField, gbc);
 
 		return wPanel;
 	}
@@ -381,9 +407,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 		}
 		else if (e.getActionCommand().equals("Create"))
 		{
-			JOptionPane.showMessageDialog(
-					frame, "Server was not created!\nThis is just a test"
-			);
+			JOptionPane.showMessageDialog(frame, "Server was not created!\nThis is just a test");
 		}
 
 		/*
@@ -408,6 +432,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 			if (result == JFileChooser.APPROVE_OPTION)
 			{
 				importFile = fc.getSelectedFile();
+				System.out.println(ServerIO.isServer(importFile));
 			}
 		}
 
@@ -445,9 +470,7 @@ public class AddServerMenu extends MyMenu implements KeyListener
 	 * 
 	 * @param importedFile
 	 */
-	public final static String getDetailsFromImportedFile(
-			final File importedFile
-	)
+	public final static String getDetailsFromImportedFile(final File importedFile)
 	{
 		final String[] names = importedFile.list();
 
