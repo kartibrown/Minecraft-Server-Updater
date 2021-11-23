@@ -2,21 +2,20 @@ package server;
 
 abstract class AbstractMinecraftServer implements MinecraftServer
 {
-	protected String dir, name, encPassword, version;
+	protected String dir, name, password, version;
 	protected int ram;
 
 	protected AbstractMinecraftServer()
 	{ dir = ""; }
 
 	protected AbstractMinecraftServer(final String toString)
-	{ dir = ""; }
+	{
+		
+	}
 
 	@Override
 	public final String toString()
-	{
-		return this.getClass().getSimpleName() + ": " + name + ", "
-				+ encPassword + ", " + ram;
-	}
+	{ return this.getClass().getSimpleName() + ": " + name + ", " + password + ", " + ram + ", " + dir; }
 
 	/*
 	 * GETTERS & SETTERS
@@ -29,7 +28,7 @@ abstract class AbstractMinecraftServer implements MinecraftServer
 	@Override
 	public final void setVersion(final String version)
 	{ this.version = version; }
-	
+
 	@Override
 	public final String getServerDir()
 	{ return dir; }

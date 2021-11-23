@@ -267,9 +267,9 @@ public class AddServerMenu extends MyMenu implements KeyListener
 
 		ePanel.add(paperBox, gbc);
 
-		// BUKKIT CHECKBOX
+		// SPIGOT CHECKBOX
 
-		bukkitBox = new JCheckBox("Bukkit");
+		bukkitBox = new JCheckBox("Spigot");
 		bukkitBox.setFont(font);
 		bukkitBox.setCursor(buttonCursor);
 		bukkitBox.setOpaque(false);

@@ -10,7 +10,7 @@ public final class ServerIO
 
 		for (final File file : filesInServer)
 		{
-			if (file.getName().toLowerCase().contains("bukkit") || file.getName().toLowerCase().contains("paper")
+			if (file.getName().toLowerCase().contains("spigot") || file.getName().toLowerCase().contains("paper")
 					|| file.getName().toLowerCase().contains("vanilla"))
 			{ return true; }
 		}
