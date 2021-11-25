@@ -10,16 +10,20 @@ abstract class AbstractMinecraftServer implements MinecraftServer
 
 	protected AbstractMinecraftServer(final String toString)
 	{
-		
-	}
 
-	@Override
-	public final String toString()
-	{ return this.getClass().getSimpleName() + ": " + name + ", " + password + ", " + ram + ", " + dir; }
+	}
 
 	/*
 	 * GETTERS & SETTERS
 	 */
+
+	@Override
+	public final String getServerDir()
+	{ return dir; }
+
+	@Override
+	public final void setServerDir(final String dir)
+	{ this.dir = dir; }
 
 	@Override
 	public final String getVersion()
@@ -28,8 +32,4 @@ abstract class AbstractMinecraftServer implements MinecraftServer
 	@Override
 	public final void setVersion(final String version)
 	{ this.version = version; }
-
-	@Override
-	public final String getServerDir()
-	{ return dir; }
 }
